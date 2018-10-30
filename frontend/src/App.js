@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import { Globals } from './globals';
+
+import * as SignalR from '@aspnet/signalr';
+
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import Navigation from './Navigation';
@@ -24,9 +28,20 @@ const MainRoutes = () => (
 export const history = createBrowserHistory();
 
 class App extends Component {
+  componentDidMount() {
+    let connection = new SignalR.HubConnectionBuilder()
+      .withUrl(Globals.apiUrl + "/chatHub")
+      .build();
+
+    connection.on("Hello", () => {document.getElementById('test').innerText = 'Hello';});
+
+    connection.start()
+      .then(() => connection.invoke("Hello"));
+  }
   render() {
     return (
       <div className="App">
+      <div id="test"></div>
         <Router history={history}>
           <div>
             <Navigation/>
