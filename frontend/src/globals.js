@@ -1,5 +1,5 @@
 const Globals = {
-    apiUrl: 'http://localhost:44391'
+  apiUrl: 'https://localhost:5001'
 };
 
 export {Globals};

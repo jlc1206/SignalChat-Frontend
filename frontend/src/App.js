@@ -14,12 +14,14 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import Test from './Pages/Test';
 import About from './Pages/About';
+import Login from './Pages/Login';
 
 const MainRoutes = () => (
   <main>
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route path='/test' component={Test}/>
+      <Route path='/login' component={Login}/>
       <Route path='/about' component={About}/>
     </Switch>
   </main>
@@ -41,7 +43,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <div id="test"></div>
+        <div id="test"></div>
         <Router history={history}>
           <div>
             <Navigation/>

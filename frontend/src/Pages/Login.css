@@ -1,0 +1,48 @@
+.loginScreen {
+  background-color: #282c34;
+  color: white;
+  height: auto;
+  padding-bottom: 10px;
+}
+
+.title {
+  padding-top: 20px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.pageContainer {
+  max-width: 420px;
+}
+
+.inputContainer {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formControl {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+}
+
+input[type="email"] {
+  margin-bottom: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+input[type="password"] {
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
