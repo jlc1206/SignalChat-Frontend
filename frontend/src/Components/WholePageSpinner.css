@@ -1,0 +1,42 @@
+@keyframes spinAround {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  border: 16px solid #333333;
+  border-top: 16px solid cyan;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spinAround 2s linear infinite;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.loading-overlay {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: 999;
+  background-color: whitesmoke;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.is_active {
+  display: flex;
+}

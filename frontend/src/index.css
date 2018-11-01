@@ -24,7 +24,3 @@ code {
   min-height: 100%;
   position: relative;
 }
-
-main {
-  padding-bottom: 35px;   /* Height of the footer */
-}

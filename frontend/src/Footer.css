@@ -1,7 +1,9 @@
-.footer {
-  padding-left: 10px;
-  position: absolute;
+.footerContainer {
+  right: 0;
   bottom: 0;
-  width: 100%;
-  height: 35px;   /* Height of the footer */
+  left: 0;
+}
+
+.rightSide {
+  float: right;
 }
