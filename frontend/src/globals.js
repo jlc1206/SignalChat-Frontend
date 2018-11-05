@@ -1,6 +1,6 @@
 const Globals = {
-  apiUrl: 'https://localhost:5001'
+  apiUrl: 'https://localhost:5001',
+  tokenEndpoint: '/Token'
 };
 
-export {Globals};
-
+export { Globals };

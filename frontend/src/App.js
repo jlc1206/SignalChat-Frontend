@@ -1,20 +1,38 @@
 import React, { Component } from 'react';
-
-import { Globals } from './globals';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import * as SignalR from '@aspnet/signalr';
 
 import createBrowserHistory from 'history/createBrowserHistory';
+import { Router, Route, Switch } from 'react-router-dom';
 
 import Navigation from './Navigation';
 import Footer from './Footer';
 
-import { Router, Route, Switch } from 'react-router-dom';
+import { Globals } from './globals';
 
 import Home from './Pages/Home';
 import Test from './Pages/Test';
 import About from './Pages/About';
 import Login from './Pages/Login';
+
+import ChatApp from './redux/appReducer';
+import { loginSuccess } from './redux/actions';
+
+const initialState = {
+  user: {
+    isLoggedIn: false,
+    isLoggingIn: false,
+    name: '',
+    token: ''
+  }
+};
+
+// composeWithDevTools causes the login page to break.
+export const store = createStore(ChatApp, initialState, applyMiddleware(thunkMiddleware));
 
 const MainRoutes = () => (
   <main>
@@ -31,6 +49,10 @@ export const history = createBrowserHistory();
 
 class App extends Component {
   componentDidMount() {
+    if(Date.parse(localStorage.getItem('expires')) > Date.now()) {
+      store.dispatch(loginSuccess({userName: localStorage.getItem('userName'), access_token: localStorage.getItem('token')}));
+    }
+
     let connection = new SignalR.HubConnectionBuilder()
       .withUrl(Globals.apiUrl + "/chatHub")
       .build();
@@ -44,13 +66,17 @@ class App extends Component {
     return (
       <div className="App">
         <div id="test"></div>
-        <Router history={history}>
+        <Provider store={store}>
           <div>
-            <Navigation/>
-            <MainRoutes/>
+            <Router history={history}>
+              <div>
+                <Navigation/>
+                <MainRoutes/>
+              </div>
+            </Router>
+            <Footer/>
           </div>
-        </Router>
-        <Footer/>
+        </Provider>
       </div>
     );
   }
