@@ -45,6 +45,9 @@ export default class Navigation extends React.Component {
               <NavItem>
                 <NavLink tag={Link} to="/login">Log in</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/register">Sign up</NavLink>
+              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options

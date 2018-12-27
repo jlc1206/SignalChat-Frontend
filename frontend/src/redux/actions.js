@@ -7,7 +7,10 @@ export const LOGIN_POST = "LOGIN_POST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGOUT = "LOGOUT";
-export const REGISTER = "REGISTER";
+
+export const REGISTER_POST = "REGISTER_POST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
 function loginPost() {
   return {
@@ -52,4 +55,44 @@ function login(email, pass) {
 
 export function doLogin(dispatch, email, pass) {
   dispatch(login(email, pass)).then(() => history.push('/'));
+}
+
+function registerPost() {
+  return {
+    type: REGISTER_POST
+  }
+}
+
+function registerSuccess() {
+  return {
+    type: REGISTER_SUCCESS
+  }
+}
+
+function registerFailure() {
+  return {
+    type: REGISTER_FAILURE
+  }
+}
+
+function register(email, pass) {
+  return function (dispatch) {
+    dispatch(registerPost());
+
+    return axios.post(Globals.apiUrl + Globals.registerEndpoint, {
+      email: email, password: pass
+    })
+      .then(response => response.json(),
+        error => { console.log('api error', error) }
+      )
+      .then(json => {
+        // what do
+        dispatch(registerSuccess(json));
+      })
+      .catch(error => { console.log('Registration failed: ', error); dispatch(registerFailure()) });
+  }
+}
+
+export function doRegister(dispatch, email, pass) {
+  dispatch(register(email, pass)).then(() => history.push('/'));
 }

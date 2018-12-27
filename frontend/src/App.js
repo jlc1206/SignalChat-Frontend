@@ -18,6 +18,7 @@ import Home from './Pages/Home';
 import Test from './Pages/Test';
 import About from './Pages/About';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 import ChatApp from './redux/appReducer';
 import { loginSuccess } from './redux/actions';
@@ -27,7 +28,9 @@ const initialState = {
     isLoggedIn: false,
     isLoggingIn: false,
     name: '',
-    token: ''
+    token: '',
+    isRegistering: false,
+    hasRegistered: false
   }
 };
 
@@ -40,6 +43,7 @@ const MainRoutes = () => (
       <Route exact path='/' component={Home}/>
       <Route path='/test' component={Test}/>
       <Route path='/login' component={Login}/>
+      <Route path='/register' component={Register}/>
       <Route path='/about' component={About}/>
     </Switch>
   </main>
