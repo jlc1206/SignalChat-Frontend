@@ -6,6 +6,32 @@ import { doLogin } from '../redux/actions';
 
 import './Login.css';
 
+const AlreadyLoggedIn = ({ user }) => {
+  if (user.isLoggedIn) {
+    return (
+      <React.Fragment>
+        <h1>You are already logged in!</h1>
+        <br/>
+      </React.Fragment>
+    );
+  }
+  else {
+    return (
+      <React.Fragment>
+        {/* Ayy lmao */}
+      </React.Fragment>
+    );
+  }
+}
+
+const alreadyLoggedInMapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+}
+
+const ConnectedAlreadyLoggedIn = connect(alreadyLoggedInMapStateToProps, null)(AlreadyLoggedIn);
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +46,7 @@ class Login extends React.Component {
     return (
       <div className="loginScreen">
         <Container>
+          <ConnectedAlreadyLoggedIn/>
           <h1 className="title">Log in</h1>
           <Row>
             <Col xl></Col>
