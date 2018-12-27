@@ -57,6 +57,16 @@ export function doLogin(dispatch, email, pass) {
   dispatch(login(email, pass)).then(() => history.push('/'));
 }
 
+export function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('email');
+  localStorage.removeItem('expires');
+
+  return {
+    type: LOGOUT
+  }
+}
+
 function registerPost() {
   return {
     type: REGISTER_POST

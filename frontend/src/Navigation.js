@@ -10,9 +10,80 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from 'reactstrap';
 
 import { Link } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+
+import { logout } from './redux/actions.js';
+
+import { history } from './App';
+
+const UserNav = ({ user, eventkeyindex, onLogoutClick }) => {
+  if (user.isLoggedIn) {
+    return (
+      <React.Fragment>
+        <UncontrolledDropdown nav inNavbar>
+          <DropdownToggle nav caret>
+            {user.name}
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem>
+              Account
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem onClick={onLogoutClick}>
+              Log out
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </React.Fragment>
+    )
+  }
+  else {
+    return (
+      <React.Fragment>
+        <NavItem>
+          <NavLink tag={Link} to="/login">Log in</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to="/register">Sign up</NavLink>
+        </NavItem>
+      </React.Fragment>
+    )
+  }
+}
+
+UserNav.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
+    token: PropTypes.string.isRequired
+  }).isRequired
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user,
+    eventkeyindex: ownProps.eventkeyindex
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogoutClick: () => {
+      dispatch(logout());
+      history.push("/login");
+    }
+  }
+}
+
+connect(mapStateToProps, mapDispatchToProps)(UserNav);
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -42,29 +113,7 @@ export default class Navigation extends React.Component {
               <NavItem>
                 <NavLink tag={Link} to="/about">About</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink tag={Link} to="/login">Log in</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} to="/register">Sign up</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <UserNav />
             </Nav>
           </Collapse>
         </Navbar>
