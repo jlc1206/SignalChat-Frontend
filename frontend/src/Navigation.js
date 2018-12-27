@@ -29,7 +29,7 @@ const UserNav = ({ user, eventkeyindex, onLogoutClick }) => {
       <React.Fragment>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-            {user.name}
+            {user.email}
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -60,7 +60,7 @@ const UserNav = ({ user, eventkeyindex, onLogoutClick }) => {
 
 UserNav.propTypes = {
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     token: PropTypes.string.isRequired

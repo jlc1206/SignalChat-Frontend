@@ -28,6 +28,7 @@ const initialState = {
     isLoggedIn: false,
     isLoggingIn: false,
     name: '',
+    email: '',
     token: '',
     isRegistering: false,
     hasRegistered: false

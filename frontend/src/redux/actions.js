@@ -18,11 +18,11 @@ function loginPost() {
   }
 }
 
-export function loginSuccess(loginResponse) {
+export function loginSuccess(email, token) {
   return {
     type: LOGIN_SUCCESS,
-    username: loginResponse.userName,
-    token: loginResponse.access_token,
+    email: email,
+    token: token,
   }
 }
 
@@ -40,15 +40,14 @@ function login(email, pass) {
     formBody = Object.keys(formData).map(elem => encodeURIComponent(elem) + "=" + encodeURIComponent(formData[elem])).join("&");
 
     return axios.post(Globals.apiUrl + Globals.tokenEndpoint, formBody)
-      .then(response => response.json(),
+      .then(response => {
+        localStorage.setItem('token', response.data);
+        localStorage.setItem('email', email);
+        // localStorage.setItem('expires', json['.expires']);
+        dispatch(loginSuccess(email, response.data));
+      },
         error => { console.log('api error', error) }
       )
-      .then(json => {
-        localStorage.setItem('token', json.access_token);
-        localStorage.setItem('email', json.email);
-        localStorage.setItem('expires', json['.expires']);
-        dispatch(loginSuccess(json));
-      })
       .catch(error => { console.log('Login failed: ', error); dispatch(loginFailure()) });
   }
 }
