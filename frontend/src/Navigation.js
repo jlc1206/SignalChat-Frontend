@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-connect(mapStateToProps, mapDispatchToProps)(UserNav);
+const ConnectedUserNav = connect(mapStateToProps, mapDispatchToProps)(UserNav);
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -113,7 +113,7 @@ export default class Navigation extends React.Component {
               <NavItem>
                 <NavLink tag={Link} to="/about">About</NavLink>
               </NavItem>
-              <UserNav />
+              <ConnectedUserNav />
             </Nav>
           </Collapse>
         </Navbar>
