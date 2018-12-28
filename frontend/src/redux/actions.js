@@ -41,9 +41,11 @@ function login(email, pass) {
 
     return axios.post(Globals.apiUrl + Globals.tokenEndpoint, formBody)
       .then(response => {
+        let expiry = Date.now() + 14000000000;
         localStorage.setItem('token', response.data);
         localStorage.setItem('email', email);
-        // localStorage.setItem('expires', json['.expires']);
+        localStorage.setItem('userName', email);
+        localStorage.setItem('expires', expiry);
         dispatch(loginSuccess(email, response.data));
       },
         error => { console.log('api error', error) }

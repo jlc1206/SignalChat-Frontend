@@ -5,7 +5,7 @@ const user = (state = { isLoggedIn: false, isLoggingIn: false, name: '', email: 
     case LOGIN_POST:
       return Object.assign({}, state, { isLoggingIn: true });
     case LOGIN_SUCCESS:
-      return Object.assign({}, state, { isLoggedIn: true, isLoggingIn: false, name: '', email: action.email, token: action.token });
+      return Object.assign({}, state, { isLoggedIn: true, isLoggingIn: false, name: action.email, email: action.email, token: action.token });
     case LOGIN_FAILURE:
       return Object.assign({}, state, { isLoggingIn: false });
     case LOGOUT:

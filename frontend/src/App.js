@@ -25,11 +25,11 @@ import { loginSuccess } from './redux/actions';
 
 const initialState = {
   user: {
-    isLoggedIn: false,
+    isLoggedIn: Date.now() < localStorage.getItem("expires"),
     isLoggingIn: false,
-    name: '',
-    email: '',
-    token: '',
+    name: localStorage.getItem("userName"),
+    email: localStorage.getItem("userName"),
+    token: localStorage.getItem("token"),
     isRegistering: false,
     hasRegistered: false
   }
@@ -59,14 +59,16 @@ class App extends Component {
     }
 
     let connection = new SignalR.HubConnectionBuilder()
-      .withUrl(Globals.apiUrl + "/chatHub")
+      .withUrl(Globals.apiUrl + "/chatHub" , {accessTokenFactory: () => localStorage.getItem("token")}).configureLogging(SignalR.LogLevel.Debug)
       .build();
 
     connection.on("Hello", () => {document.getElementById('test').innerText = 'Hello';});
 
     connection.start()
-      .then(() => connection.invoke("Hello"));
-  }
+      .then(() => connection.invoke("Hello"))
+      .then(() => connection.invoke("JoinChannel", 1))
+      .then( () => connection.invoke("PostMessage", "Test"));
+    }
   render() {
     return (
       <div className="App">
