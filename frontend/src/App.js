@@ -4,8 +4,6 @@ import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import * as SignalR from '@aspnet/signalr';
-
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Router, Route, Switch } from 'react-router-dom';
 
@@ -21,6 +19,7 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 
 import ChatApp from './redux/appReducer';
+import { createSignalRMiddleware } from './redux/signalRMiddleware';
 import { loginSuccess } from './redux/actions';
 
 const initialState = {
@@ -35,17 +34,18 @@ const initialState = {
   }
 };
 
+const middleWares = [createSignalRMiddleware, thunkMiddleware];
 // composeWithDevTools causes the login page to break.
-export const store = createStore(ChatApp, initialState, applyMiddleware(thunkMiddleware));
+export const store = createStore(ChatApp, initialState, applyMiddleware(...middleWares));
 
 const MainRoutes = () => (
   <main>
     <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route path='/test' component={Test}/>
-      <Route path='/login' component={Login}/>
-      <Route path='/register' component={Register}/>
-      <Route path='/about' component={About}/>
+      <Route exact path='/' component={Home} />
+      <Route path='/test' component={Test} />
+      <Route path='/login' component={Login} />
+      <Route path='/register' component={Register} />
+      <Route path='/about' component={About} />
     </Switch>
   </main>
 );
@@ -54,21 +54,10 @@ export const history = createBrowserHistory();
 
 class App extends Component {
   componentDidMount() {
-    if(Date.parse(localStorage.getItem('expires')) > Date.now()) {
-      store.dispatch(loginSuccess({userName: localStorage.getItem('userName'), access_token: localStorage.getItem('token')}));
+    if (Date.parse(localStorage.getItem('expires')) > Date.now()) {
+      store.dispatch(loginSuccess({ userName: localStorage.getItem('userName'), access_token: localStorage.getItem('token') }));
     }
-
-    let connection = new SignalR.HubConnectionBuilder()
-      .withUrl(Globals.apiUrl + "/chatHub" , {accessTokenFactory: () => localStorage.getItem("token")}).configureLogging(SignalR.LogLevel.Debug)
-      .build();
-
-    connection.on("Hello", () => {document.getElementById('test').innerText = 'Hello';});
-
-    connection.start()
-      .then(() => connection.invoke("Hello"))
-      .then(() => connection.invoke("JoinChannel", 1))
-      .then( () => connection.invoke("PostMessage", "Test"));
-    }
+  }
   render() {
     return (
       <div className="App">
@@ -77,11 +66,11 @@ class App extends Component {
           <div>
             <Router history={history}>
               <div>
-                <Navigation/>
-                <MainRoutes/>
+                <Navigation />
+                <MainRoutes />
               </div>
             </Router>
-            <Footer/>
+            <Footer />
           </div>
         </Provider>
       </div>
