@@ -113,6 +113,13 @@ export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const EDIT_MESSAGE = 'EDIT_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
+export function loadMessages (messages) {
+  return {
+    type: LOAD_MESSAGES,
+    messages: messages
+  };
+}
+
 export const LOAD_CHATUSERS = 'LOAD_CHATUSERS';
 export const ADD_CHATUSER = 'ADD_CHATUSER';
 export const EDIT_CHATUSER = 'EDIT_CHATUSER';

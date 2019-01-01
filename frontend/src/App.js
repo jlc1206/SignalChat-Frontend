@@ -19,7 +19,7 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 
 import ChatApp from './redux/appReducer';
-import { createSignalRMiddleware } from './redux/signalRMiddleware';
+import { createSignalRMiddleware, signalRConnect } from './redux/signalRMiddleware';
 import { loginSuccess } from './redux/actions';
 
 const initialState = {
@@ -68,6 +68,7 @@ class App extends Component {
           <div>
             <Router history={history}>
               <div>
+                <button onClick={() => store.dispatch(signalRConnect())}>Connect</button>
                 <Navigation />
                 <MainRoutes />
               </div>
