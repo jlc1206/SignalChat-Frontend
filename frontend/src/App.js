@@ -19,8 +19,8 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 
 import ChatApp from './redux/appReducer';
-import { createSignalRMiddleware, signalRConnect } from './redux/signalRMiddleware';
-import { loginSuccess } from './redux/actions';
+import { createSignalRMiddleware, signalRConnect, signalRLoadMessages } from './redux/signalRMiddleware';
+import { loginSuccess, loadMessages } from './redux/actions';
 
 const initialState = {
   user: {
@@ -32,7 +32,7 @@ const initialState = {
     isRegistering: false,
     hasRegistered: false
   },
-  messages:{},
+  messages: {},
   chatUsers: {},
 };
 
@@ -68,7 +68,7 @@ class App extends Component {
           <div>
             <Router history={history}>
               <div>
-                <button onClick={() => store.dispatch(signalRConnect())}>Connect</button>
+                <button onClick={() => {store.dispatch(signalRConnect()).then(() => store.dispatch(signalRLoadMessages()))}}>Connect</button>
                 <Navigation />
                 <MainRoutes />
               </div>

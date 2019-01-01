@@ -31,7 +31,7 @@ const messages = (state = {}, action) => {
     case EDIT_MESSAGE:
       return Object.assign({},state, {[action.id]: {id: action.id, userID: action.userID,content: action.content}});    
     case DELETE_MESSAGE:
-      let {newSet, ...deleted } = state;
+      let {newSet, [action.id]: removed } = state;
       return Object.assign({},newSet);
     default:
       return state;
@@ -46,7 +46,7 @@ const chatUsers = (state = {}, action) => {
     case EDIT_CHATUSER:
       return Object.assign({},state, {[action.id]: {id: action.id, name: action.name, role: action.role}});
     case LEAVE_CHATUSER:
-      let {newSet, ...left } = state;
+      let {newSet, [action.id]: removed } = state;
       return Object.assign({},newSet);
     default:
       return state;

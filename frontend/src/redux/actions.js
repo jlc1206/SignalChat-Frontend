@@ -113,14 +113,42 @@ export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const EDIT_MESSAGE = 'EDIT_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
-export function loadMessages (messages) {
+export function loadMessages(messages) {
   return {
     type: LOAD_MESSAGES,
     messages: messages
   };
 }
 
+export function addMessage(message) {
+  return {
+    type: ADD_MESSAGE,
+    message: message
+  }
+}
+
+export function editMessage(message) {
+  return {
+    type: EDIT_MESSAGE,
+    message: message
+  }
+}
+
+export function deleteMessage(id) {
+  return {
+    type: DELETE_MESSAGE,
+    id: id
+  }
+}
+
 export const LOAD_CHATUSERS = 'LOAD_CHATUSERS';
 export const ADD_CHATUSER = 'ADD_CHATUSER';
 export const EDIT_CHATUSER = 'EDIT_CHATUSER';
 export const LEAVE_CHATUSER = 'LEAVE_CHATUSER';
+
+export function loadChatusers (users) {
+  return {
+    type: LOAD_CHATUSERS,
+    users: users
+  }
+}
