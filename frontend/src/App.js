@@ -31,7 +31,9 @@ const initialState = {
     token: localStorage.getItem("token"),
     isRegistering: false,
     hasRegistered: false
-  }
+  },
+  messages:{},
+  chatUsers: {}
 };
 
 const middleWares = [createSignalRMiddleware, thunkMiddleware];
