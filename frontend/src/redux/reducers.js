@@ -1,6 +1,6 @@
 import { LOGIN_POST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, REGISTER_POST, REGISTER_SUCCESS, REGISTER_FAILURE,
-   ADD_MESSAGE, EDIT_MESSAGE, DELETE_MESSAGE,
-    ADD_CHATUSER, EDIT_CHATUSER, LEAVE_CHATUSER } from "./actions";
+   LOAD_MESSAGES, ADD_MESSAGE, EDIT_MESSAGE, DELETE_MESSAGE,
+    LOAD_CHATUSERS, ADD_CHATUSER, EDIT_CHATUSER, LEAVE_CHATUSER } from "./actions";
 
 const user = (state = { isLoggedIn: false, isLoggingIn: false, name: '', email: '', token: '', isRegistering: false, hasRegistered: false }, action) => {
   switch (action.type) {
@@ -25,6 +25,8 @@ const user = (state = { isLoggedIn: false, isLoggingIn: false, name: '', email: 
 
 const messages = (state = {}, action) => {
   switch(action.type) {
+    case LOAD_MESSAGES:
+      return Object.assign({},action.messages);
     case ADD_MESSAGE:
     case EDIT_MESSAGE:
       return Object.assign({},state, {[action.id]: {id: action.id, userID: action.userID,content: action.content}});    
@@ -38,7 +40,9 @@ const messages = (state = {}, action) => {
 
 const chatUsers = (state = {}, action) => {
   switch(action.type) {
-    case ADD_CHATUSER:
+    case LOAD_CHATUSERS:
+      return Object.assign({},action.chatUsers);
+    case ADD_CHATUSER:      
     case EDIT_CHATUSER:
       return Object.assign({},state, {[action.id]: {id: action.id, name: action.name, role: action.role}});
     case LEAVE_CHATUSER:

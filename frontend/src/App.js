@@ -33,7 +33,7 @@ const initialState = {
     hasRegistered: false
   },
   messages:{},
-  chatUsers: {}
+  chatUsers: {},
 };
 
 const middleWares = [createSignalRMiddleware, thunkMiddleware];
