@@ -69,6 +69,7 @@ class App extends Component {
             <Router history={history}>
               <div>
                 <button onClick={() => {store.dispatch(signalRConnect()).then(() => store.dispatch(signalRLoadMessages()))}}>Connect</button>
+                <button onClick={() => {console.log(store.getState().messages)}}>Log Store</button>
                 <Navigation />
                 <MainRoutes />
               </div>
